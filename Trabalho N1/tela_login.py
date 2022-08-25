@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-from tela2 import Tela2
+#from tela2 import Tela2
 
 class Login:
     def __init__(self, master):
         self.janela = master
-        self.janela.geometry("1200x800")
+        self.janela.geometry("1200x600")
         self.janela.title('Tela de login')
 
         self.frm_login = tk.Frame(self.janela)
