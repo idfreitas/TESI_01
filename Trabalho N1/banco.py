@@ -30,3 +30,6 @@ class Banco:
     def nome_bc(self, value):
         self._numero_bc = value
 
+
+    #teste
+
