@@ -56,19 +56,48 @@ class Tela2:
         self.frm_cadastro_banco.place(relx=.5, rely=.5, anchor=tk.CENTER)
 
          # Titulo do fomulário
-        self.lbl_titulo = tk.Label(self.frm_cadastro_banco, text='Cadastro do Banco', bg='blue', fg='white')
+        self.lbl_titulo = tk.Label(self.frm_cadastro_banco, text='Cadastrar Banco', bg='blue', fg='white')
         self.lbl_titulo.grid(row=0, column=1, sticky=tk.W)
 
-        # Primeiro nome do cadastrado
-        self.lbl_nome = tk.Label(self.frm_cadastro_banco, text='Informe o nome do banco ')
-        self.lbl_nome.grid(row=1, column=0, sticky=tk.E)
+        # Nome do banco
+        self.lbl_nome_banco = tk.Label(self.frm_cadastro_banco, text='Informe o nome do banco ')
+        self.lbl_nome_banco.grid(row=1, column=0, sticky=tk.E)
 
-        self.ent_nome = tk.Entry(self.frm_cadastro_banco, width=35)
-        self.ent_nome.grid(row=1, column=1, ipady=5)
+        self.ent_nome_banco = tk.Entry(self.frm_cadastro_banco, width=35)
+        self.ent_nome_banco.grid(row=1, column=1, ipady=5)
 
-        # Primeiro sobrenome do cadastrado
-        self.lbl_cpf = tk.Label(self.frm_cadastro_banco, text='Informe o número do Banco')
-        self.lbl_cpf.grid(row=2, column=0, sticky=tk.E)
+        # Número do Banco
+        self.lbl_num_banco = tk.Label(self.frm_cadastro_banco, text='Informe o número do Banco')
+        self.lbl_num_banco.grid(row=2, column=0, sticky=tk.E)
+
+        self.ent_num_banco = tk.Entry(self.frm_cadastro_banco, width=35)
+        self.ent_num_banco.grid(row=1, column=1, ipady=5)
+
+
+
+        #Botão cadastrar
+        self.btn_salvar_banco = tk.Button(self.frm_cadastro, text='Cadastrar', bg='green', fg='white', command=self.salvar_cadastro_banco)
+        self.btn_salvar_banco.grid(row=9, column=1, columnspan=2, sticky=tk.EW)
+
+         # Botão para salvar dados do cadastro
+        self.btn_salvar_banco = tk.Button(self.frm_cadastro, text='Salvar', bg='green', fg='white', command=self.salvar_cadastro_banco)
+        self.btn_salvar_banco.grid(row=9, column=1, columnspan=2, sticky=tk.EW)
+    ##################Verificações para cadastrar banco ########################
+    def salvar_cadastro_banco(self):
+        verifica = True
+        if self.ent_nome_banco.get() == '' or self.ent_num_banco.get() == '':
+            messagebox.showinfo('Aviso', 'Preencha todos os campos do cadastro!!', parent=self.tl_cadastro_banco)
+            verifica = False
+
+        if verifica == True:
+            nome = self.ent_nome_banco.get()
+            num = self.ent_num_banco.get()
+
+            banco = Banco(nome, num)
+            self.cadastro_banco.append(banco)
+            self.tl_cadastro.destroy()
+            self.pg_inicial.deiconify()
+            messagebox.showinfo('Aviso', 'Cadastro realizado com sucesso!')
 
 
 
