@@ -8,7 +8,7 @@ class Tela2:
     def __init__(self, master):
         self.pg_inicial = master
         self.pg_inicial.title('Página inicial')
-        self.pg_inicial.geometry('1200x800')
+        self.pg_inicial.geometry('1200x600')
         self.clientes = []
         self._conta_pou = []
         self._conta_cor = []
