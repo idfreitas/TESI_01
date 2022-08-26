@@ -25,7 +25,7 @@ class Banco:
     @property
     def nome_bc(self):
         return self._nome_bc
-    
+    # tu em 
     @nome_bc.setter
     def nome_bc(self, value):
         self._numero_bc = value

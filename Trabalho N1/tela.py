@@ -4,6 +4,7 @@ from tkinter import ttk
 from cliente import Cliente
 from contapoupanca import ContaPoupanca
 from contacorrente import ContaCorrente
+from banco import Banco
 class Tela2:
     def __init__(self, master):
         self.pg_inicial = master
@@ -20,24 +21,95 @@ class Tela2:
         self.barra = tk.Menu(self.fr_menus_pag_inicial, fg='blue')
         self.menu1 = tk.Menu(self.barra, tearoff=0)
         self.menu2 = tk.Menu(self.barra, tearoff=0)
+        self.menu3 = tk.Menu(self.barra, tearoff=0)
 
         self.barra.add_cascade(label='Cliente', menu=self.menu1)
         self.barra.add_cascade(label='Contas', menu=self.menu2)
+        self.barra.add_cascade(label='Banco', menu=self.menu3)
 
         self.menu1.add_command(label='Cadastrar novo cliente', command=self.cadastrar_cliente)
         self.menu1.add_separator()
         self.menu1.add_command(label='Lista de clientes', command=self.lista_clientes)
+
         self.menu2.add_command(label='Criar contas', command=self.criar_conta)
         self.menu2.add_separator()
         self.menu2.add_command(label='lista de contas', command=self.lista_conta)
 
+        self.menu3.add_command(label="Cadastrar Banco",command=self.cadastro_banco)
+        self.menu3.add_separator()
+        """
+        self.menu3.add_command(label='Mostrar Banco', command=self.mostrar_banco)
+        self.menu3.add_separator()
+        self.menu3.add_command(label='Mostrar Banco', command=self.atualizar_banco)
+        """
+       
+
         self.pg_inicial.config(menu=self.barra)
+    #########Banco####################
+    def cadastro_banco(self):
+        self.tl.cadastro_banco = tk.Toplevel()
+        self.tl.cadastro_banco.grab_set()
+        self.tl.cadastro_banco.title('Cadastro do Banco')
+        self.tl.cadastro_banco.geometry('800x600')
+
+        self.frm_cadastro_banco = tk.Frame(self.tl_cadastro)
+        self.frm_cadastro_banco.place(relx=.5, rely=.5, anchor=tk.CENTER)
+
+         # Titulo do fomulário
+        self.lbl_titulo = tk.Label(self.frm_cadastro_banco, text='Cadastrar Banco', bg='blue', fg='white')
+        self.lbl_titulo.grid(row=0, column=1, sticky=tk.W)
+
+        # Nome do banco
+        self.lbl_nome_banco = tk.Label(self.frm_cadastro_banco, text='Informe o nome do banco ')
+        self.lbl_nome_banco.grid(row=1, column=0, sticky=tk.E)
+
+        self.ent_nome_banco = tk.Entry(self.frm_cadastro_banco, width=35)
+        self.ent_nome_banco.grid(row=1, column=1, ipady=5)
+
+        # Número do Banco
+        self.lbl_num_banco = tk.Label(self.frm_cadastro_banco, text='Informe o número do Banco')
+        self.lbl_num_banco.grid(row=2, column=0, sticky=tk.E)
+
+        self.ent_num_banco = tk.Entry(self.frm_cadastro_banco, width=35)
+        self.ent_num_banco.grid(row=1, column=1, ipady=5)
+
+
+
+        #Botão cadastrar
+        self.btn_salvar_banco = tk.Button(self.frm_cadastro, text='Cadastrar', bg='green', fg='white', command=self.salvar_cadastro_banco)
+        self.btn_salvar_banco.grid(row=9, column=1, columnspan=2, sticky=tk.EW)
+
+         # Botão para salvar dados do cadastro
+        self.btn_salvar_banco = tk.Button(self.frm_cadastro, text='Salvar', bg='green', fg='white', command=self.salvar_cadastro_banco)
+        self.btn_salvar_banco.grid(row=9, column=1, columnspan=2, sticky=tk.EW)
+    ##################Verificações para cadastrar banco ########################
+    def salvar_cadastro_banco(self):
+        verifica = True
+        if self.ent_nome_banco.get() == '' or self.ent_num_banco.get() == '':
+            messagebox.showinfo('Aviso', 'Preencha todos os campos do cadastro!!', parent=self.tl_cadastro_banco)
+            verifica = False
+
+        if verifica == True:
+            nome = self.ent_nome_banco.get()
+            num = self.ent_num_banco.get()
+
+            banco = Banco(nome, num)
+            self.cadastro_banco.append(banco)
+            self.tl_cadastro.destroy()
+            self.pg_inicial.deiconify()
+            messagebox.showinfo('Aviso', 'Cadastro realizado com sucesso!')
+
+
+
+
     ############ Tela de cadastro de novos clientes ##########################################3
+    
+
     def cadastrar_cliente(self):
         self.tl_cadastro = tk.Toplevel()
         self.tl_cadastro.grab_set()
         self.tl_cadastro.title('Cadastro')
-        self.tl_cadastro.geometry('1200x800')
+        self.tl_cadastro.geometry('1200x600')
 
         self.frm_cadastro = tk.Frame(self.tl_cadastro)
         self.frm_cadastro.place(relx=.5, rely=.5, anchor=tk.CENTER)
@@ -99,10 +171,9 @@ class Tela2:
         self.ent_confirma.grid(row=8, column=1, ipady=5)
 
         # Botão para salvar dados do cadastro
-        self.btn_salvar = tk.Button(self.frm_cadastro, text='Salvar', bg='green', fg='white',
-                                    command=self.salvar_cadastro)
+        self.btn_salvar = tk.Button(self.frm_cadastro, text='Salvar', bg='green', fg='white', command=self.salvar_cadastro)
         self.btn_salvar.grid(row=9, column=1, columnspan=2, sticky=tk.EW)
-    ##################Virificações para salvar novo cliente ########################
+    ##################Verificações para salvar novo cliente ########################
     def salvar_cadastro(self):
         verifica = True
         if self.ent_nome.get() == '' or self.ent_cpf.get() == '' or self.ent_endereco.get() == '' or self.ent_senha_cadast.get() == '' or self.ent_confirma.get() == '':
